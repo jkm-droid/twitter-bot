@@ -1,12 +1,13 @@
 # twitter-bot/database.py
 
 import os
-import mysql.connector as mysql
 
+import mysql.connector as mysql
 from dotenv import load_dotenv
 from mysql.connector import errorcode
-from logger import log
+
 from constants import constants
+from logger import log
 
 # load env variables
 load_dotenv()

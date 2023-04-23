@@ -1,9 +1,10 @@
 # twitter-bot/services/hashtag_service.py
 import logging
-import time
 import os
-from dotenv import load_dotenv
+import time
 from datetime import datetime
+
+from dotenv import load_dotenv
 
 load_dotenv()
 

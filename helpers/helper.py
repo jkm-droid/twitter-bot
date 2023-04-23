@@ -1,9 +1,12 @@
 # twitter-bot/helper.py
 
 import random
-from constants import constants
+
 from googletrans import Translator
+
+from constants import constants
 from services import database_service
+
 translator = Translator()
 
 """read keywords randomly from a file"""

@@ -1,8 +1,9 @@
 # twitter-bot/config.py
 
-import tweepy
 import logging
 import os
+
+import tweepy
 from dotenv import load_dotenv
 
 load_dotenv()

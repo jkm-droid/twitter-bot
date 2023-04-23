@@ -1,6 +1,7 @@
 # twitter-bot/hashtag.py
 
 import logging
+
 from configs.config import create_api
 from configs.database import create_db_connection
 from services.hashtag_service import get_trends_by_location

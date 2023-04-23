@@ -3,10 +3,11 @@ import os
 import time
 from datetime import datetime
 
+from dotenv import load_dotenv
+
 from constants import constants
 from helpers.helper import generate_tweet
 from services import media_service, database_service
-from dotenv import load_dotenv
 
 load_dotenv()
 

@@ -7,7 +7,7 @@ from configs.config import create_api
 from configs.database import create_db_connection
 from constants import constants
 from logger import log
-from services import bot_service
+from services import bot_service,media_service
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()

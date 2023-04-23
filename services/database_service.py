@@ -1,5 +1,6 @@
 # twitter-bot/services/database_service.py
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
