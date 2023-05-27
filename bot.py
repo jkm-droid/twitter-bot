@@ -1,9 +1,9 @@
 import threading
-import time
+
 from configs.database import create_db_connection
 from configs.twitter import create_api
 from logger import _logger
-from services import bot_service
+from services import bot_service, post_tweet_service
 from services import hashtag_service
 
 
@@ -24,7 +24,7 @@ def bot_main():
             elif init_msg == 1:
                 _logger().info("initialized bot successfully")
                 trend_thread = threading.Thread(target=hashtag_service.get_trends_by_location(api, db_connection))
-                tweet_thread = threading.Thread(target=bot_service.send_tweet(api, db_connection))
+                tweet_thread = threading.Thread(target=post_tweet_service.send_tweet(api, db_connection))
                 trend_thread.start()
                 tweet_thread.start()
             else:

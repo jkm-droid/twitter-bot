@@ -6,7 +6,6 @@ import mysql.connector as mysql
 from dotenv import load_dotenv
 from mysql.connector import errorcode
 
-from constants import constants
 from logger import _logger
 
 # load env variables
