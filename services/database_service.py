@@ -22,7 +22,7 @@ def get_item_from_db(db_connection, item_table):
 
 
 def get_universities_from_db(db_connection):
-    cursor = db_connection.cursor(buffered=True)
+    cursor = db_connection.cursor(buffered=True, dictionary=True)
     query = "SELECT name FROM universities WHERE (bot_id=%s AND country=%s)"
     cursor.execute(query, (bot_id, bot_target_country))
     result = cursor.fetchall()

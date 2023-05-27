@@ -1,4 +1,4 @@
-# twitter-bot/config.py
+# twitter-bot/twitter.py
 
 import logging
 import os
@@ -6,8 +6,9 @@ import os
 import tweepy
 from dotenv import load_dotenv
 
+from logger import _logger
+
 load_dotenv()
-logger = logging.getLogger()
 
 
 def create_api():
@@ -28,10 +29,9 @@ def create_api():
         api.verify_credentials()
         username = api.me()
     except Exception as e:
-        logger.error(f"Error creating twitter api : {e}", exc_info=True)
+        _logger().error("Error creating twitter api : {e}", exc_info=True)
         raise e
 
-    logger.info("API created")
-    logger.info(username.name)
+    _logger().info(f"connected to api successfully as {username.name}")
 
     return api

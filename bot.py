@@ -1,44 +1,38 @@
-# twitter-bot/bot.py
-
-import logging
+import threading
 import time
-
-from configs.config import create_api
 from configs.database import create_db_connection
-from constants import constants
-from logger import log
-from services import bot_service,media_service
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
-
-"""function for creating the API"""
-"""And sending the tweet"""
+from configs.twitter import create_api
+from logger import _logger
+from services import bot_service
+from services import hashtag_service
 
 
-def main():
-    log("connecting...please wait", constants.msg_info)
+def bot_main():
+    _logger().info("connecting to twitter api...")
     api = create_api()
     if api:
-        while True:
-            try:
-                db_connection = create_db_connection()
-                result = bot_service.initialize_bot(db_connection)
-                init_msg = result['initialized']
-                if init_msg == 0:
-                    log("Some errors occurred when initializing bot. See more details in the error logs file",
-                        constants.msg_error)
-                    break
-                elif init_msg == 1:
-                    bot_service.send_tweet(api, db_connection)
-                else:
-                    log("An error occurred when initializing bot", constants.msg_error)
-            except Exception as e:
-                log(f"An exception occurred {e}", constants.msg_error)
-                time.sleep(100)
+        _logger().info("connecting to database...")
+        db_connection = create_db_connection()
+
+        _logger()("initializing bot...")
+        result = bot_service.initialize_bot(db_connection)
+        while result:
+            init_msg = result['initialized']
+            if init_msg == 0:
+                _logger().info("Some errors occurred when initializing bot. See more details in the error log file")
+                break
+            elif init_msg == 1:
+                _logger().info("initialized bot successfully")
+                trend_thread = threading.Thread(target=hashtag_service.get_trends_by_location(api, db_connection))
+                tweet_thread = threading.Thread(target=bot_service.send_tweet(api, db_connection))
+                trend_thread.start()
+                tweet_thread.start()
+            else:
+                _logger().info("An error occurred when initializing bot", exc_info=True)
+
     else:
-        log("Connection to the api could not be established", constants.msg_error)
+        _logger().error("Connection to the api could not be established", exc_info=True)
 
 
 if __name__ == "__main__":
-    main()
+    bot_main()

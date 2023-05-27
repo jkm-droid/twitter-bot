@@ -5,6 +5,7 @@ import random
 from googletrans import Translator
 
 from constants import constants
+from logger import _logger
 from services import database_service
 
 translator = Translator()
@@ -111,11 +112,11 @@ def generate_tweet(db_connection):
         end=translate_to_arabic("KINDLY DM")
     )
 
-    print(f"Before check:{len(my_tweet)}")
+    _logger().info(f"Before check:{len(my_tweet)}")
     if len(my_tweet) > 278:
         generate_tweet(db_connection)
 
-    print(f"After check:{len(my_tweet)}")
+    _logger().info(f"After check:{len(my_tweet)}")
     return my_tweet
 
 
